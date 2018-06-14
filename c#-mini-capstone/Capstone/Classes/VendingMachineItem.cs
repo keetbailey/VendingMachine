@@ -23,6 +23,9 @@ namespace Capstone.Classes
             Message = SetMessage(Type);
         }
 
+        public VendingMachineItem()
+        { }
+
         public string SetMessage(string type)
         {
             if (type == "Chip")

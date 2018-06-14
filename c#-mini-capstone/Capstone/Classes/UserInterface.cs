@@ -12,6 +12,7 @@ namespace Capstone.Classes
 
         public UserInterface(VendingMachine vendingMachine)
         {
+            HandleMainMenu(); 
 
         }
 
@@ -26,5 +27,32 @@ namespace Capstone.Classes
 
         }
 
+        private void HandleMainMenu()
+        {
+            Console.WriteLine("(1) Display Vending Machine Items");
+            Console.WriteLine("(2) Purchase");
+            Console.WriteLine("(3) Exit");
+            Console.ReadLine();
+        }
+
+        private void DisplayMenu()
+        {
+
+        }
+
+        private void HandlePurchaseMenu()
+        {
+
+        }
+
+        private void Exit()
+        {
+
+        }
+
+        private void PrintSalesReport()
+        {
+
+        }
     }
 }
