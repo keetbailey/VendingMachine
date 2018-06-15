@@ -8,7 +8,7 @@ namespace CapstoneTests
     public class VendingMachineTests
     {
         VendingMachine vm = new VendingMachine();
-        VendingMachineItem newItem = new VendingMachineItem();
+        //VendingMachineItem newItem = new VendingMachineItem();
         
         
 
