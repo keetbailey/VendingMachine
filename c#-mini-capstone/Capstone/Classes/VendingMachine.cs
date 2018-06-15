@@ -9,16 +9,26 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-        public Dictionary<string, VendingMachineItem> itemsDic = new Dictionary<string, VendingMachineItem>();
+        private Dictionary<string, VendingMachineItem> itemsDic = new Dictionary<string, VendingMachineItem>();
         public decimal customerBalance;
         public decimal revenue;
+        public decimal totalSales;
 
         public VendingMachine()
         {
             customerBalance = 0;
             revenue = 0;
+            totalSales = 0;
             GetInformation();
 
+        }
+
+        public Dictionary<string, VendingMachineItem> ItemsDic
+        {
+            get
+            {
+                return itemsDic;
+            }
         }
 
         public Dictionary<string, VendingMachineItem> VMArray
@@ -35,7 +45,7 @@ namespace Capstone.Classes
 
         private void GetInformation()
         {
-            string directory = @"C:\Users\kbailey\team1-c-week4-pair-exercises\c#-mini-capstone\etc";
+            string directory = Environment.CurrentDirectory;// = @"C:\Users\kbailey\team1-c-week4-pair-exercises\c#-mini-capstone\etc";
             string filename = "vendingmachine.csv";
             string fullPath = Path.Combine(directory, filename);
 
@@ -83,6 +93,59 @@ namespace Capstone.Classes
                 }
             }
         }
+       
+        public void SaveSaleReport()
+        {
+            // create new doc called date-time-SalesReport.txt
+            string directory = Environment.CurrentDirectory;
+            //string fileName = "SalesReport-" + DateTime.Now.Date.Month + @"/" + DateTime.Now.Day + @"/" +
+            //    DateTime.Now.Year + @"-" + DateTime.Now.TimeOfDay.Hours + @":" +
+            //    DateTime.Now.TimeOfDay.Minutes + @":" + DateTime.Now.TimeOfDay.Milliseconds
+            //    + @".txt";
+            string fileName = "SalesReport-" + DateTime.Now.Date.Month + DateTime.Now.Day  +
+                DateTime.Now.Year + DateTime.Now.TimeOfDay.Hours +
+                DateTime.Now.TimeOfDay.Minutes + DateTime.Now.TimeOfDay.Milliseconds
+                + @".txt";
+                
+            string filePath = Path.Combine(directory, fileName);
+
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                foreach (KeyValuePair<string, VendingMachineItem> KVP in ItemsDic)
+                {
+                    sw.WriteLine(KVP.Value.Name + "|" + (KVP.Value.GetInitialQuantity() - KVP.Value.Quantity));
+                }
+                sw.WriteLine();
+                sw.WriteLine($"**Total Sales** {totalSales.ToString("C")}");
+            }
+        }
+
+        //public void AuditTransaction(decimal dollarsFed, decimal customerBalance)
+        //{
+        //    DateTime dateTimeOfTransaction = DateTime.Now;
+        //    string auditString = $"{dateTimeOfTransaction} FEED MONEY: ${dollarsFed}\t${customerBalance}";
+
+        //    Console.WriteLine(auditString);
+
+        //    AddToAudit(auditString);
+        //}
+
+        //public void AuditTransaction()
+        //{ }
+
+        //public void AuditTransaction()
+        //{ }
+
+        //public void AddToAudit(string auditString)
+        //{
+        //    foreach (KeyValuePair<string, VendingMachineItem> KVP in ItemsDic)
+        //    {
+        //        sw.Write($"{KVP.Value.Name}\t{KVP.Value.GetInitialQuantity() - KVP.Value.Quantity}\n");
+
+        //    }
+
+        //    
+        //}
     }
 }
 
