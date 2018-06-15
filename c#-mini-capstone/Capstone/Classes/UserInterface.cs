@@ -23,7 +23,7 @@ namespace Capstone.Classes
         private void HandleMainMenu()
         {
             int choice = 1;
-            while (choice > 0 && choice < 5 && choice != 3)
+            while (choice != 3)
             {
                 Console.WriteLine();
                 Console.WriteLine("(1) Display Vending Machine Items");
@@ -42,6 +42,10 @@ namespace Capstone.Classes
                 else if (choice == 4)
                 {
                     vendingMachine.SaveSaleReport();
+                }
+                else if (choice != 3)
+                {
+                    Console.WriteLine("Invalid Entry");
                 }
             }
             
@@ -120,6 +124,7 @@ namespace Capstone.Classes
                     if (input == 1 || input == 2 || input == 5 || input == 10)
                     {
                         total += input;
+                        vendingMachine.AuditTransaction(input, total);
                     }
                     else
                     {
@@ -151,10 +156,17 @@ namespace Capstone.Classes
                     {
                         if (vendingMachine.customerBalance >= KVP.Value.Price)
                         {
+                            decimal startingBalance = vendingMachine.customerBalance;
                             vendingMachine.totalSales += KVP.Value.Price;
                             vendingMachine.customerBalance -= KVP.Value.Price;
+                            decimal endingBalance = vendingMachine.customerBalance;
+
                             KVP.Value.Quantity--;
+                            Console.WriteLine(KVP.Value.Name + " " + KVP.Value.Price.ToString("C") + " Remaining Balance: " + endingBalance.ToString("C"));//name cost remaining
+
                             Console.WriteLine(KVP.Value.Message);
+
+                            vendingMachine.AuditTransaction(startingBalance, endingBalance, KVP.Key);
                         }
                         else
                         {
@@ -177,6 +189,8 @@ namespace Capstone.Classes
 
         private decimal CalculateChange(decimal balance)
         {
+            vendingMachine.AuditTransaction(balance);
+
             int nickels = 0, dimes = 0, quarters = 0;
 
             Console.WriteLine("Balance: $" + balance);
