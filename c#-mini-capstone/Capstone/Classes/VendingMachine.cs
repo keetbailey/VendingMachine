@@ -20,7 +20,6 @@ namespace Capstone.Classes
             revenue = 0;
             totalSales = 0;
             GetInformation();
-
         }
 
         public Dictionary<string, VendingMachineItem> ItemsDic
@@ -98,10 +97,6 @@ namespace Capstone.Classes
         {
             // create new doc called date-time-SalesReport.txt
             string directory = Environment.CurrentDirectory;
-            //string fileName = "SalesReport-" + DateTime.Now.Date.Month + @"/" + DateTime.Now.Day + @"/" +
-            //    DateTime.Now.Year + @"-" + DateTime.Now.TimeOfDay.Hours + @":" +
-            //    DateTime.Now.TimeOfDay.Minutes + @":" + DateTime.Now.TimeOfDay.Milliseconds
-            //    + @".txt";
             string fileName = "SalesReport-" + DateTime.Now.Date.Month + DateTime.Now.Day  +
                 DateTime.Now.Year + DateTime.Now.TimeOfDay.Hours +
                 DateTime.Now.TimeOfDay.Minutes + DateTime.Now.TimeOfDay.Milliseconds
@@ -120,32 +115,43 @@ namespace Capstone.Classes
             }
         }
 
-        //public void AuditTransaction(decimal dollarsFed, decimal customerBalance)
-        //{
-        //    DateTime dateTimeOfTransaction = DateTime.Now;
-        //    string auditString = $"{dateTimeOfTransaction} FEED MONEY: ${dollarsFed}\t${customerBalance}";
+        public void AuditTransaction(decimal dollarsFed, decimal customerBalance)
+        {
+            DateTime dateTimeOfTransaction = DateTime.Now;
+            string auditString = $"{dateTimeOfTransaction} FEED MONEY: {dollarsFed.ToString("C")}\t{customerBalance.ToString("C")}";
 
-        //    Console.WriteLine(auditString);
 
-        //    AddToAudit(auditString);
-        //}
+            AddToAudit(auditString);
+        }
 
-        //public void AuditTransaction()
-        //{ }
+        public void AuditTransaction(decimal changeBalance)
+        {
+            DateTime dateTimeOfTransaction = DateTime.Now;
+            string auditString = $"{dateTimeOfTransaction} GIVE CHANGE: {changeBalance.ToString("C")}\t${0.00m}";
 
-        //public void AuditTransaction()
-        //{ }
+            
+            AddToAudit(auditString);
+        }
 
-        //public void AddToAudit(string auditString)
-        //{
-        //    foreach (KeyValuePair<string, VendingMachineItem> KVP in ItemsDic)
-        //    {
-        //        sw.Write($"{KVP.Value.Name}\t{KVP.Value.GetInitialQuantity() - KVP.Value.Quantity}\n");
+        public void AuditTransaction(decimal startingBalance, decimal endingBalance, string slot)
+        {
+            DateTime dateTimeOfTransaction = DateTime.Now;
+            string auditString = $"{dateTimeOfTransaction} {itemsDic[slot].Name} {slot}  {startingBalance.ToString("C")}\t{endingBalance.ToString("C")}";
 
-        //    }
+            
 
-        //    
-        //}
+            AddToAudit(auditString);
+        }
+
+        public void AddToAudit(string auditString)
+        {
+            string fileName = "Log.txt";
+
+            using (StreamWriter sw = new StreamWriter(fileName, true))
+            {
+                sw.WriteLine(auditString);
+            }
+        }
     }
 }
 
