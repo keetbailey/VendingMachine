@@ -12,7 +12,7 @@ namespace Capstone.Classes
 
         public UserInterface(VendingMachine vendingMachine)
         {
-            this.vendingMachine = new VendingMachine();
+            this.vendingMachine =  vendingMachine;
         }
 
         public void RunInterface()
@@ -100,7 +100,7 @@ namespace Capstone.Classes
 
         private void FeedMoney()
         {
-            int input = -1;
+            int input;
             string choice = "";
             decimal total = vendingMachine.customerBalance;
 

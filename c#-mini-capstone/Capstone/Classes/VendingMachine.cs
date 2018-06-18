@@ -11,15 +11,13 @@ namespace Capstone.Classes
     {
         private Dictionary<string, VendingMachineItem> itemsDic = new Dictionary<string, VendingMachineItem>();
         public decimal customerBalance;
-        public decimal revenue;
         public decimal totalSales;
 
         public VendingMachine()
         {
             customerBalance = 0;
-            revenue = 0;
             totalSales = 0;
-            GetInformation();
+            RetrieveDataFromFile();
         }
 
         public Dictionary<string, VendingMachineItem> ItemsDic
@@ -30,9 +28,9 @@ namespace Capstone.Classes
             }
         }
 
-        private void GetInformation()
+        private void RetrieveDataFromFile()
         {
-            string directory = Environment.CurrentDirectory;// = @"C:\Users\kbailey\team1-c-week4-pair-exercises\c#-mini-capstone\etc";
+            string directory = Environment.CurrentDirectory;
             string filename = "vendingmachine.csv";
             string fullPath = Path.Combine(directory, filename);
 
@@ -57,7 +55,7 @@ namespace Capstone.Classes
                         if (i == 0)
                         {
                             slot = line.Substring(0, n);
-
+                            
                         }
                         else if (i == 1)
                         {

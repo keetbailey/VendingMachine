@@ -24,7 +24,7 @@ namespace Capstone.Classes
             Message = SetMessage(Type);
         }
 
-        public int GetInitialQuantity()
+        public int GetInitialQuantity() 
         {
             return INITIAL_QUANTITY;
         }
